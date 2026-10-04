@@ -1,0 +1,30 @@
+section,label,value,unit,scenario_or_note,source
+water_level,2005,0,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+water_level,2020,3.54,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+water_level,2030,6.30,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+water_level,2040,9.06,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+water_level,2050,12.60,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+water_level,2060,16.54,inches relative to 2005,NOAA 2022 Intermediate scenario,NOAA Sea Level Rise Projections
+observed_minor_flood_days,2012,2,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2013,0,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2014,0,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2015,3,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2016,3,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2017,3,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2018,0,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2019,9,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2020,6,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2021,0,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2022,3,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2023,6,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2024,5,days,Virginia Key station 8723214,NOAA High Tide Flooding
+observed_minor_flood_days,2025,7,days,Virginia Key station 8723214,NOAA High Tide Flooding
+projected_minor_flood_days,2026 low,5,days,NOAA annual outlook low confidence bound,NOAA High Tide Flooding
+projected_minor_flood_days,2026 high,8,days,NOAA annual outlook high confidence bound,NOAA High Tide Flooding
+projected_minor_flood_days,2030,6,days per year,NOAA 2022 Intermediate scenario,NOAA High Tide Flooding
+projected_minor_flood_days,2040,15,days per year,NOAA 2022 Intermediate scenario,NOAA High Tide Flooding
+projected_minor_flood_days,2050,35,days per year,NOAA 2022 Intermediate scenario,NOAA High Tide Flooding
+projected_minor_flood_days,2060,90,days per year,NOAA 2022 Intermediate scenario,NOAA High Tide Flooding
+expected_annual_loss,current sea level,0.17,billion 2017 USD per year,screening model,ASCE Miami-Dade study
+expected_annual_loss,plus 1 foot,2.50,billion 2017 USD per year,screening model,ASCE Miami-Dade study
+expected_annual_loss,plus 2 feet,12.00,billion 2017 USD per year,approximately; screening model,ASCE Miami-Dade study

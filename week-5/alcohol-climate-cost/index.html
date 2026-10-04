@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A visual comparison of greenhouse gas emissions from beer, wine, and spirits after adjusting for a U.S. standard drink.">
+  <meta property="og:title" content="The Climate Cost of a Drink">
+  <meta property="og:description" content="Beer, wine, and spirits contain the same alcohol in a standard drink, but they do not create the same emissions.">
+  <meta property="og:image" content="https://mscholz3-svg.github.io/econ238-portfolio/week-5/alcohol-climate-cost/cover.png">
+  <title>The Climate Cost of a Drink | Michael Scholz</title>
+  <style>
+    :root {
+      --ink: #27201d;
+      --muted: #6a5f59;
+      --paper: #faf5ec;
+      --card: #fffdf9;
+      --wine: #7c2d43;
+      --wine-dark: #4d1b2b;
+      --beer: #dda93c;
+      --spirit: #3f7d75;
+      --cream: #f3e4c8;
+      --line: #ded2c3;
+      --shadow: 0 14px 38px rgba(53, 37, 28, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 0%, rgba(124, 45, 67, .14), transparent 33rem),
+        var(--paper);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: var(--wine); }
+
+    a:hover,
+    a:focus-visible { color: var(--spirit); }
+
+    .wrap {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(77, 27, 43, .15);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      font-size: .88rem;
+    }
+
+    nav a {
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .topic-label {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .hero {
+      padding: 82px 0 60px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(290px, .75fr);
+      align-items: end;
+      gap: 52px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--wine);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3.2rem, 8.5vw, 7rem);
+      line-height: .9;
+      letter-spacing: -.055em;
+    }
+
+    .lede {
+      max-width: 750px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.3rem);
+    }
+
+    .hero-stat {
+      padding: 28px;
+      border-radius: 24px;
+      color: white;
+      background: var(--wine-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-stat strong {
+      display: block;
+      margin-bottom: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.2rem, 7vw, 5.6rem);
+      line-height: .9;
+    }
+
+    .hero-stat p {
+      margin: 0;
+      font-size: 1.04rem;
+    }
+
+    .question {
+      margin: 0 0 72px;
+      padding: 25px 30px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 25px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .question b {
+      color: var(--wine);
+      font-size: .78rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .question p {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+      line-height: 1.25;
+    }
+
+    section {
+      padding: 68px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .step {
+      margin: 0 0 8px;
+      color: var(--wine);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4.8vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .servings {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .serving {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--card);
+      text-align: center;
+    }
+
+    .glass-icon {
+      width: 72px;
+      height: 92px;
+      margin: 0 auto 14px;
+      display: block;
+    }
+
+    .serving h3 {
+      margin: 0 0 5px;
+      font-size: 1.32rem;
+    }
+
+    .serving p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .equals {
+      margin: 0 0 28px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .95rem;
+    }
+
+    .equals strong { color: var(--ink); }
+
+    .chart-card {
+      padding: clamp(20px, 4vw, 38px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .chart-title {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.03rem;
+      font-weight: 800;
+    }
+
+    .chart-subtitle {
+      margin: 5px 0 24px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 22px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 112px 1fr 92px;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bar-row .label { font-weight: 800; }
+
+    .track {
+      height: 30px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eee7de;
+    }
+
+    .fill {
+      height: 100%;
+      min-width: 8px;
+      border-radius: inherit;
+    }
+
+    .beer-fill { background: var(--beer); }
+    .wine-fill { background: var(--wine); }
+    .spirit-fill { background: var(--spirit); }
+
+    .bar-row .value {
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .chart-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .scale-cards {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .scale-card {
+      padding: 19px;
+      border-radius: 14px;
+      background: var(--cream);
+    }
+
+    .scale-card b {
+      display: block;
+      margin-bottom: 5px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65rem;
+      line-height: 1;
+    }
+
+    .scale-card span {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .explain-card {
+      padding: 30px;
+      border-radius: 22px;
+      color: white;
+      background: var(--wine-dark);
+    }
+
+    .explain-card h3 {
+      margin: 0 0 13px;
+      font-size: 1.75rem;
+    }
+
+    .explain-card p {
+      margin: 0 0 15px;
+      color: #f6e9ed;
+    }
+
+    .explain-card p:last-child { margin-bottom: 0; }
+
+    .population-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+    }
+
+    .population-card .big {
+      display: block;
+      color: var(--wine);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.6rem, 7vw, 5.8rem);
+      font-weight: 700;
+      line-height: .95;
+    }
+
+    .population-card h3 {
+      margin: 12px 0 8px;
+      font-size: 1.35rem;
+    }
+
+    .population-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .package-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .package-row {
+      display: grid;
+      grid-template-columns: 165px 1fr 80px;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .package-row .label { font-weight: 800; }
+
+    .package-row .fill {
+      background: linear-gradient(90deg, #eed69c, var(--beer));
+    }
+
+    .package-row .value {
+      color: #8c6410;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .package-callout {
+      margin-top: 25px;
+      padding: 22px;
+      border-left: 5px solid var(--beer);
+      border-radius: 6px 14px 14px 6px;
+      background: #fcf0d4;
+    }
+
+    .package-callout p { margin: 0; }
+
+    .context-list {
+      display: grid;
+      gap: 17px;
+    }
+
+    .context-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 112px;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .context-row .label {
+      font-weight: 800;
+    }
+
+    .context-row .serving-size {
+      display: block;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 400;
+    }
+
+    .context-row .value {
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .context-row .track {
+      height: 25px;
+    }
+
+    .context-callout {
+      margin-top: 25px;
+      padding: 22px;
+      border-left: 5px solid var(--spirit);
+      border-radius: 6px 14px 14px 6px;
+      background: #e8f2ef;
+    }
+
+    .context-callout p { margin: 0; }
+
+    .conclusion {
+      padding: 78px 0;
+      color: white;
+      background: var(--wine-dark);
+    }
+
+    .conclusion .wrap {
+      display: grid;
+      grid-template-columns: .55fr 1.45fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .conclusion h2 { margin: 0; }
+
+    .conclusion p {
+      margin: 0;
+      color: #f6e9ed;
+      font-size: clamp(1.08rem, 2.3vw, 1.4rem);
+    }
+
+    .methods {
+      background: #f3eadc;
+    }
+
+    .methods-grid {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 38px;
+    }
+
+    .formula {
+      padding: 20px;
+      border-radius: 14px;
+      color: white;
+      background: var(--wine);
+      font-size: .95rem;
+    }
+
+    .methods h3 {
+      margin: 0 0 12px;
+      font-size: 1.32rem;
+    }
+
+    .methods p,
+    .methods li {
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .methods ul,
+    .sources ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .methods li,
+    .sources li { margin-bottom: 11px; }
+
+    .download {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: white;
+      background: var(--wine-dark);
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .download:hover,
+    .download:focus-visible {
+      color: white;
+      background: var(--spirit);
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    @media (max-width: 850px) {
+      .hero,
+      .result-grid,
+      .methods-grid,
+      .conclusion .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero { gap: 28px; }
+    }
+
+    @media (max-width: 680px) {
+      .hero { padding: 58px 0 46px; }
+      .question { grid-template-columns: 1fr; gap: 8px; }
+      section { padding: 50px 0; }
+      .servings,
+      .scale-cards { grid-template-columns: 1fr; }
+      .serving {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        column-gap: 16px;
+        text-align: left;
+        align-items: center;
+      }
+      .glass-icon {
+        grid-row: 1 / 3;
+        margin: 0;
+      }
+      .bar-row,
+      .package-row,
+      .context-row {
+        grid-template-columns: 1fr auto;
+      }
+      .bar-row .track,
+      .package-row .track,
+      .context-row .track {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+      .bar-row .value,
+      .package-row .value,
+      .context-row .value {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      nav { align-items: flex-start; }
+      .topic-label { max-width: 155px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="wrap" aria-label="Page navigation">
+      <a href="../">← Week 5 exhibits</a>
+      <span class="topic-label">Original topic · Alcohol and climate</span>
+    </nav>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow">Beer, wine, and spirits</p>
+        <h1>The Climate Cost of a Drink</h1>
+        <p class="lede">A liter of wine creates more greenhouse gas emissions than a liter of beer, but people do not drink them in the same amount. I wanted to see what happens when the comparison is one equal U.S. standard drink.</p>
+      </div>
+
+      <aside class="hero-stat" aria-label="Key finding">
+        <strong>3.5×</strong>
+        <p>In this comparison, a standard glass of wine has about three and a half times the emissions of a standard pour of spirits.</p>
+      </aside>
+    </div>
+
+    <div class="wrap question">
+      <b>The question</b>
+      <p>If beer, wine, and spirits contain the same amount of alcohol, do they have the same climate cost?</p>
+    </div>
+
+    <section id="comparison">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="step">1 · Make the comparison fair</p>
+          <h2>One drink means three different volumes.</h2>
+          <p>The National Institute on Alcohol Abuse and Alcoholism defines each of these as about 14 grams of pure alcohol. That gives the comparison one common unit.</p>
+        </div>
+
+        <div class="servings" aria-label="United States standard drink sizes">
+          <article class="serving">
+            <svg class="glass-icon" viewBox="0 0 72 92" role="img" aria-label="Beer glass">
+              <path d="M13 12h39l-4 68H18z" fill="#fff8e5" stroke="#8c6410" stroke-width="3"/>
+              <path d="M18 31h29l-3 44H21z" fill="#dda93c"/>
+              <path d="M52 28h6c8 0 9 12 7 22-1 7-5 13-13 13" fill="none" stroke="#8c6410" stroke-width="4"/>
+              <path d="M17 31c6-9 13-2 18-7 4 5 10 0 14 7" fill="#fffdf9" stroke="#8c6410" stroke-width="2"/>
+            </svg>
+            <h3>Beer</h3>
+            <p>12 fl oz at 5%</p>
+          </article>
+
+          <article class="serving">
+            <svg class="glass-icon" viewBox="0 0 72 92" role="img" aria-label="Wine glass">
+              <path d="M18 10h36c0 25-5 36-18 36S18 35 18 10z" fill="#fff8f8" stroke="#7c2d43" stroke-width="3"/>
+              <path d="M22 26h28c-2 12-6 16-14 16s-12-4-14-16z" fill="#7c2d43"/>
+              <path d="M36 46v29M23 80h26" stroke="#7c2d43" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            <h3>Wine</h3>
+            <p>5 fl oz at 12%</p>
+          </article>
+
+          <article class="serving">
+            <svg class="glass-icon" viewBox="0 0 72 92" role="img" aria-label="Spirits glass">
+              <path d="M15 29h42l-5 50H20z" fill="#f4fbf9" stroke="#3f7d75" stroke-width="3"/>
+              <path d="M20 51h32l-3 24H23z" fill="#8bc0b8"/>
+              <path d="M21 59c9-5 21 5 30-1" fill="none" stroke="#3f7d75" stroke-width="2"/>
+            </svg>
+            <h3>Spirits</h3>
+            <p>1.5 fl oz at 40%</p>
+          </article>
+        </div>
+
+        <p class="equals"><strong>Same alcohol:</strong> about 14 grams of pure ethanol in each serving.</p>
+
+        <figure class="chart-card">
+          <figcaption>
+            <p class="chart-title">Estimated greenhouse gas emissions per standard drink</p>
+            <p class="chart-subtitle">Grams of carbon dioxide equivalent, rounded</p>
+          </figcaption>
+
+          <div class="bar-list" role="img" aria-label="A standard beer produces about 290 grams of carbon dioxide equivalent, wine about 320 grams, and spirits about 90 grams.">
+            <div class="bar-row">
+              <span class="label">Beer</span>
+              <span class="track"><span class="fill beer-fill" style="display:block;width:90.6%"></span></span>
+              <span class="value">290 g</span>
+            </div>
+            <div class="bar-row">
+              <span class="label">Wine</span>
+              <span class="track"><span class="fill wine-fill" style="display:block;width:100%"></span></span>
+              <span class="value">320 g</span>
+            </div>
+            <div class="bar-row">
+              <span class="label">Spirits</span>
+              <span class="track"><span class="fill spirit-fill" style="display:block;width:28.1%"></span></span>
+              <span class="value">90 g</span>
+            </div>
+          </div>
+
+          <div class="scale-cards" aria-label="Emissions from ten standard drinks">
+            <div class="scale-card">
+              <b>2.9 kg</b>
+              <span>Ten standard beers</span>
+            </div>
+            <div class="scale-card">
+              <b>3.2 kg</b>
+              <span>Ten standard wines</span>
+            </div>
+            <div class="scale-card">
+              <b>0.9 kg</b>
+              <span>Ten standard pours of spirits</span>
+            </div>
+          </div>
+
+          <p class="chart-note">I combined life cycle emissions per liter from a <a href="#source-1">Swedish study</a> with <a href="#source-2">U.S. standard serving sizes</a>. For beer, I used the upper end of the study's beer range. The lower end would be about 260 grams instead of 290 grams.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="meaning">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="step">2 · Read the result carefully</p>
+          <h2>Per liter and per drink answer different questions.</h2>
+          <p>Spirits are emissions intensive per liter because distilling takes energy. A standard pour is only 1.5 ounces, though, so the serving size changes the comparison.</p>
+        </div>
+
+        <div class="result-grid">
+          <article class="explain-card">
+            <h3>This is not a recommendation to switch drinks.</h3>
+            <p>The chart only compares estimated climate emissions for the same amount of alcohol. It says nothing about health, price, taste, or how much someone may actually pour.</p>
+            <p>A cocktail can also add mixers, ice, refrigeration, and more packaging that are not represented by a plain 1.5 ounce pour.</p>
+          </article>
+
+          <article class="population-card">
+            <span class="big">52 kg</span>
+            <h3>per person per year</h3>
+            <p>This was the average alcohol related footprint in the Swedish study population. It was about 3% of their diet related greenhouse gas emissions. It is context for that group, not a global average. <a href="#source-1" aria-label="See source 1">[1]</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="packaging">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="step">3 · The container can change the answer</p>
+          <h2>The same beer did not have one fixed footprint.</h2>
+          <p>A separate Italian life cycle study compared one pale lager in different packages. I scaled each result to a 12 ounce serving so the packaging options use the same amount of beer.</p>
+        </div>
+
+        <figure class="chart-card">
+          <figcaption>
+            <p class="chart-title">One 12 ounce lager under different packaging systems</p>
+            <p class="chart-subtitle">Grams of carbon dioxide equivalent from one study's production and distribution model</p>
+          </figcaption>
+
+          <div class="package-list" role="img" aria-label="A 12 ounce lager has about 90 grams of carbon dioxide equivalent from a reusable steel keg, 200 grams from a 660 milliliter glass bottle, 240 grams from small glass bottles in cartons, and 245 grams from aluminum cans.">
+            <div class="package-row">
+              <span class="label">Reusable steel keg</span>
+              <span class="track"><span class="fill" style="display:block;width:36.7%"></span></span>
+              <span class="value">90 g</span>
+            </div>
+            <div class="package-row">
+              <span class="label">Large glass bottle</span>
+              <span class="track"><span class="fill" style="display:block;width:82.4%"></span></span>
+              <span class="value">200 g</span>
+            </div>
+            <div class="package-row">
+              <span class="label">Small glass bottles</span>
+              <span class="track"><span class="fill" style="display:block;width:98%"></span></span>
+              <span class="value">240 g</span>
+            </div>
+            <div class="package-row">
+              <span class="label">Aluminum cans</span>
+              <span class="track"><span class="fill" style="display:block;width:100%"></span></span>
+              <span class="value">245 g</span>
+            </div>
+          </div>
+
+          <div class="package-callout">
+            <p><strong>Within this one study, the highest result was almost three times the keg result.</strong> That does not mean every keg will beat every can. Reuse, shipping distance, recycled content, and the electricity source all matter.</p>
+          </div>
+
+          <p class="chart-note">This chart comes from a different country and model than the drink comparison above. Its values are useful for comparing the packages inside this chart, but the exact numbers should not be mixed across the two studies. Source: <a href="#source-3">Cimini and Moresi</a>.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="other-drinks">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="step">4 · A little context</p>
+          <h2>How does alcohol compare with everyday drinks?</h2>
+          <p>I added a few familiar drinks because 290 grams of carbon dioxide equivalent is hard to picture on its own. Each number below represents one common serving.</p>
+        </div>
+
+        <figure class="chart-card">
+          <figcaption>
+            <p class="chart-title">Estimated emissions from one serving</p>
+            <p class="chart-subtitle">Grams of carbon dioxide equivalent, rounded</p>
+          </figcaption>
+
+          <div class="context-list" role="img" aria-label="A 500 milliliter serving of tap water produces less than one gram of carbon dioxide equivalent. An 8 ounce black coffee produces about 115 grams, with a range from 65 to 166 grams. A 500 milliliter bottled water produces about 130 grams. A 330 milliliter can of Coca-Cola produces about 170 grams. A standard beer produces about 290 grams and a standard wine produces about 320 grams.">
+            <div class="context-row">
+              <span class="label">Tap water<span class="serving-size">500 mL</span></span>
+              <span class="track"><span class="fill" style="display:block;width:1px;background:#3f7d75"></span></span>
+              <span class="value">&lt;1 g</span>
+            </div>
+            <div class="context-row">
+              <span class="label">Black coffee<span class="serving-size">8 fl oz</span></span>
+              <span class="track"><span class="fill" style="display:block;width:35.9%;background:#6f4e37"></span></span>
+              <span class="value">about 115 g</span>
+            </div>
+            <div class="context-row">
+              <span class="label">Bottled water<span class="serving-size">500 mL</span></span>
+              <span class="track"><span class="fill" style="display:block;width:40.6%;background:#62a7c4"></span></span>
+              <span class="value">130 g</span>
+            </div>
+            <div class="context-row">
+              <span class="label">Coca-Cola<span class="serving-size">330 mL can</span></span>
+              <span class="track"><span class="fill" style="display:block;width:53.1%;background:#c73732"></span></span>
+              <span class="value">170 g</span>
+            </div>
+            <div class="context-row">
+              <span class="label">Beer<span class="serving-size">12 fl oz</span></span>
+              <span class="track"><span class="fill beer-fill" style="display:block;width:90.6%"></span></span>
+              <span class="value">290 g</span>
+            </div>
+            <div class="context-row">
+              <span class="label">Wine<span class="serving-size">5 fl oz</span></span>
+              <span class="track"><span class="fill wine-fill" style="display:block;width:100%"></span></span>
+              <span class="value">320 g</span>
+            </div>
+          </div>
+
+          <div class="context-callout">
+            <p>Beer and wine are higher than the other examples, but a can of Coke is not close to zero. The biggest difference is water. A 500 mL serving of tap water is almost invisible, while the bottled water supply chain pushes the same amount to about 130 grams in one study.</p>
+          </div>
+
+          <p class="chart-note">Coffee is shown at the midpoint of a 65 to 166 gram range for an 8 ounce cup of black drip coffee. These estimates come from different countries, years, and life cycle models, so this chart shows rough scale rather than a universal ranking. Sources: <a href="#source-5">Carbon Trust</a>, <a href="#source-6">Usva et al.</a>, and <a href="#source-7">Thomassen et al.</a></p>
+        </figure>
+      </div>
+    </section>
+
+    <section class="conclusion">
+      <div class="wrap">
+        <h2>What I learned</h2>
+        <p>Before doing this I thought distilling would automatically make liquor the worst option. Per liter it is much more emissions intensive than beer, but a standard serving is also much smaller. Once I compared equal amounts of alcohol, wine and beer came out much higher per drink. I also did not expect the container to matter enough to change the beer result by almost three times in one study. The main thing I learned is that the answer depends a lot on what unit is being compared.</p>
+      </div>
+    </section>
+
+    <section class="methods">
+      <div class="wrap methods-grid">
+        <div>
+          <h2>How I calculated it</h2>
+          <div class="formula">grams per drink = kg CO₂e per liter × serving size in liters × 1,000</div>
+          <p>Example for wine: 2.16 kg CO₂e per liter × 0.14787 liters × 1,000 = 319 grams CO₂e, rounded to 320 grams.</p>
+          <a class="download" href="data.csv" download>Download the data and calculations</a>
+        </div>
+
+        <div>
+          <h3>Important limits</h3>
+          <ul>
+            <li>The main life cycle values represent beverages consumed in Sweden, while the serving sizes are U.S. standard drinks.</li>
+            <li>Production methods, packaging, imports, and electricity sources vary. These are estimates, not labels for every brand.</li>
+            <li>The beer point uses 0.81 kg CO₂e per liter, the upper end of the source's 0.73 to 0.81 beer range.</li>
+            <li>Actual pours can contain more than one standard drink.</li>
+            <li>The result does not include a person's travel to a store, restaurant, or bar.</li>
+          </ul>
+
+          <div class="sources">
+            <h3>Sources</h3>
+            <ol>
+              <li id="source-1"><a href="https://doi.org/10.1016/j.jclepro.2018.07.295">Hallström et al., Climate impact of alcohol consumption in Sweden, Journal of Cleaner Production, 2018</a></li>
+              <li id="source-2"><a href="https://www.niaaa.nih.gov/alcohols-effects-health/what-standard-drink">National Institute on Alcohol Abuse and Alcoholism, What Is a Standard Drink?</a></li>
+              <li id="source-3"><a href="https://doi.org/10.1016/j.jclepro.2015.06.063">Cimini and Moresi, Carbon footprint of a pale lager packed in different formats, Journal of Cleaner Production, 2016</a></li>
+              <li id="source-4"><a href="https://doi.org/10.1016/j.scitotenv.2021.146416">D'Ammaro et al., Benchmarking of carbon footprint data from the Italian wine sector, 2021</a></li>
+              <li id="source-5"><a href="https://www.carbontrust.com/sites/default/files/documents/resource/public/Personal%20Carbon%20Allowances%20White%20Paper%20-%20REPORT.pdf">Carbon Trust, Coca-Cola product carbon footprint reported in the Personal Carbon Allowances White Paper, 2012</a></li>
+              <li id="source-6"><a href="https://doi.org/10.1007/s11367-020-01799-5">Usva et al., Carbon and water footprint of coffee consumed in Finland, 2020</a></li>
+              <li id="source-7"><a href="https://doi.org/10.1016/j.scitotenv.2021.145398">Thomassen et al., The environmental impact of household's water use, 2021</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Michael Scholz · ECON 238 · Updated October 4, 2026</div>
+  </footer>
+</body>
+</html>

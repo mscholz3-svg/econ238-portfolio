@@ -1,0 +1,14 @@
+comparison,item,serving_ml,intensity_kg_co2e_per_liter,result_grams_co2e,calculation,source
+standard_drink,Beer at 5 percent,354.88,0.81,287.45,0.35488 x 0.81 x 1000,Hallstrom et al. 2018 and NIAAA
+standard_drink,Wine at 12 percent,147.87,2.16,319.40,0.14787 x 2.16 x 1000,Hallstrom et al. 2018 and NIAAA
+standard_drink,Spirits at 40 percent,44.36,2.07,91.83,0.04436 x 2.07 x 1000,Hallstrom et al. 2018 and NIAAA
+beer_package,30 liter reusable steel keg,354.88,0.25,88.72,0.35488 x 0.25 x 1000,Cimini and Moresi 2016
+beer_package,660 ml glass bottle,354.88,0.57,202.28,0.35488 x 0.57 x 1000,Cimini and Moresi 2016
+beer_package,330 ml glass bottles in cartons,354.88,0.67,237.77,0.35488 x 0.67 x 1000,Cimini and Moresi 2016
+beer_package,330 ml aluminum cans,354.88,0.69,244.87,0.35488 x 0.69 x 1000,Cimini and Moresi 2016
+other_drink,Tap water 500 ml,500,0.00017,0.085,0.5 x 0.00017 x 1000,Thomassen et al. 2021
+other_drink_low,Black drip coffee 8 oz low estimate,236.59,0.27,63.88,0.23659 x 0.27 x 1000,Usva et al. 2020
+other_drink_midpoint,Black drip coffee 8 oz midpoint,236.59,0.485,114.75,0.23659 x 0.485 x 1000,Midpoint of Usva et al. 2020 range
+other_drink_high,Black drip coffee 8 oz high estimate,236.59,0.70,165.61,0.23659 x 0.70 x 1000,Usva et al. 2020
+other_drink,Bottled water 500 ml,500,0.259,129.50,0.5 x 0.259 x 1000,Thomassen et al. 2021
+other_drink,Coca-Cola 330 ml can,330,0.51515,170.00,170 grams reported directly,Carbon Trust and Coca-Cola 2012
