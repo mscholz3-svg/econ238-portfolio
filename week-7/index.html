@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build Nuclear. Pay the Neighbors.</title>
+  <style>
+    :root {
+      --navy: #10283b;
+      --cream: #f5f0e5;
+      --orange: #df6434;
+      --gold: #efbd48;
+      --green: #2e6a5b;
+      --ink: #17222b;
+      --paper: #fffdf8;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px 22px 72px;
+      color: white;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(239, 189, 72, .28), transparent 24rem),
+        var(--navy);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -85px;
+      bottom: -165px;
+      width: 410px;
+      height: 410px;
+      border: 52px solid rgba(255,255,255,.06);
+      border-radius: 50%;
+    }
+
+    .nav, .hero-grid, main, footer {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .small-button {
+      padding: 9px 14px;
+      border: 2px solid var(--gold);
+      border-radius: 999px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 42px;
+      align-items: center;
+      padding-top: 72px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: .92rem;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(3rem, 8vw, 6.4rem);
+      line-height: .92;
+      letter-spacing: -.055em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin: 25px 0 30px;
+      font-size: clamp(1.08rem, 2.2vw, 1.38rem);
+    }
+
+    .primary-button {
+      display: inline-block;
+      padding: 15px 24px;
+      border-radius: 7px;
+      color: var(--navy);
+      background: var(--gold);
+      box-shadow: 0 5px 0 #b7811f;
+      font-size: 1.05rem;
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .primary-button:hover { transform: translateY(-2px); }
+
+    .plant-mark {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      min-height: 310px;
+    }
+
+    .tower {
+      position: relative;
+      width: 210px;
+      height: 230px;
+      border-radius: 42% 42% 28% 28% / 18% 18% 82% 82%;
+      background: linear-gradient(90deg, #d9e3e2, #ffffff 45%, #c1d1d2);
+      box-shadow: inset -18px 0 28px rgba(16,40,59,.24), 0 24px 55px rgba(0,0,0,.24);
+    }
+
+    .tower::before, .tower::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.78);
+      filter: blur(1px);
+    }
+
+    .tower::before {
+      width: 170px;
+      height: 86px;
+      left: 8px;
+      top: -65px;
+      box-shadow: 68px -26px 0 5px rgba(255,255,255,.58), 6px -72px 0 -8px rgba(255,255,255,.45);
+    }
+
+    .tower::after {
+      width: 175px;
+      height: 22px;
+      left: 17px;
+      top: -7px;
+      background: #aec1c3;
+      box-shadow: inset 0 5px 8px rgba(16,40,59,.3);
+    }
+
+    main { padding: 58px 0 64px; }
+
+    .ballot-box {
+      margin-top: -96px;
+      padding: 30px;
+      position: relative;
+      z-index: 3;
+      border-top: 8px solid var(--orange);
+      border-radius: 10px;
+      background: var(--paper);
+      box-shadow: 0 15px 45px rgba(16,40,59,.18);
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--orange);
+      font-size: .83rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      line-height: 1.08;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 1.35rem;
+    }
+
+    .ballot-question {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 34px 0 50px;
+    }
+
+    .stat {
+      padding: 22px 18px;
+      border-radius: 8px;
+      color: white;
+      background: var(--green);
+    }
+
+    .stat:nth-child(even) { background: var(--navy); }
+
+    .stat strong {
+      display: block;
+      color: var(--gold);
+      font-size: 1.75rem;
+      line-height: 1.1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 6px;
+      font-size: .92rem;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .card {
+      padding: 26px;
+      border: 1px solid #d7d2c8;
+      border-radius: 9px;
+      background: var(--paper);
+    }
+
+    .card p { margin: 0; }
+
+    .card.full { grid-column: 1 / -1; }
+
+    .yes-card { border-top: 7px solid var(--green); }
+    .no-card { border-top: 7px solid var(--orange); }
+    .buried-card { border-top: 7px solid var(--gold); }
+
+    .vote-callout {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      margin: 42px 0;
+      padding: 30px;
+      border-radius: 10px;
+      color: white;
+      background: var(--navy);
+    }
+
+    .vote-callout h2 { color: white; }
+    .vote-callout p { margin: 6px 0 0; }
+
+    .sources {
+      padding: 28px;
+      border-radius: 9px;
+      background: #e9e2d3;
+    }
+
+    .sources ul {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+
+    .sources li { margin: 8px 0; }
+
+    .sources a {
+      color: #174d67;
+      font-weight: 700;
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: .88rem;
+      color: #4e5356;
+    }
+
+    footer {
+      padding: 24px 0 40px;
+      color: #5e6467;
+      font-size: .9rem;
+    }
+
+    @media (max-width: 800px) {
+      .hero-grid { grid-template-columns: 1fr; padding-top: 54px; }
+      .plant-mark { display: none; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .content-grid { grid-template-columns: 1fr; }
+      .card.full { grid-column: auto; }
+      .vote-callout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-links a:first-child { display: none; }
+      .stats { grid-template-columns: 1fr; }
+      .ballot-box { padding: 22px; }
+      .hero { padding-left: 0; padding-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav" aria-label="Main navigation">
+      <div class="brand">New York Ballot Initiative</div>
+      <div class="nav-links">
+        <a href="#proposal">Read the proposal</a>
+        <a class="small-button" href="vote.html">Vote</a>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Reliable power with a local dividend</p>
+        <h1>Build Nuclear. Pay the Neighbors.</h1>
+        <p class="hero-copy">New York gets reliable, low-carbon electricity. The households living closest to the plant receive $1,000 every year.</p>
+        <a class="primary-button" href="vote.html">Cast your vote</a>
+      </div>
+      <div class="plant-mark" aria-hidden="true">
+        <div class="tower"></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="proposal">
+    <section class="ballot-box" aria-labelledby="ballot-title">
+      <span class="label">Proposition</span>
+      <h2 id="ballot-title">New York Nuclear Host Community Dividend Act</h2>
+      <p class="ballot-question">Should New York approve construction of one new nuclear power plant and require its operator to pay $1,000 each year to every occupied household whose primary residence is within 10 miles of the facility? Payments would begin when the plant starts commercial operation and continue while it operates. A YES vote approves the plant and creates a state-administered fund, financed by the operator, to make the annual payments.</p>
+    </section>
+
+    <section class="stats" aria-label="Proposal estimates">
+      <div class="stat"><strong>1,000 MW</strong><span>Proposed plant capacity</span></div>
+      <div class="stat"><strong>8.1 billion</strong><span>Estimated kWh generated each year</span></div>
+      <div class="stat"><strong>$1,000</strong><span>Annual payment per nearby household</span></div>
+      <div class="stat"><strong>0.6¢</strong><span>Estimated cost per kWh if 50,000 households qualify</span></div>
+    </section>
+
+    <section class="content-grid">
+      <article class="card full">
+        <span class="label">What’s the Deal?</span>
+        <h3>The proposal in plain language</h3>
+        <p>New York would approve one 1,000-megawatt nuclear plant using technology that can be licensed today. Once it begins operating, every occupied household within 10 miles would receive $1,000 per year from a state-administered fund paid for by the plant operator. A plant running 92% of the time would generate about 8 billion kWh annually, roughly enough for 740,000 average U.S. homes. If 50,000 nearby households qualified, payments would cost $50 million per year, equal to about 0.6 cents per kWh generated. New York gains reliable electricity without direct operating carbon emissions. Nearby residents receive a measurable benefit. The tradeoff is accepting years of construction, cooling-water and transmission infrastructure, accident risk, and spent nuclear fuel that may remain at the site. The operator pays directly, although some cost could ultimately reach electricity customers or taxpayers.</p>
+      </article>
+
+      <article class="card yes-card">
+        <span class="label">Best Case for Yes</span>
+        <h3>Share the benefit with the host community</h3>
+        <p>New York is asking the grid to support electrified buildings, cars, and growing data-center demand while cutting fossil fuel use. Nuclear already supplies about one-fifth of the state’s electricity and runs far more consistently than weather-dependent sources. One new plant could provide large amounts of power on a relatively small site without producing carbon dioxide during operation. The dividend also changes the usual siting bargain. The state would not simply tell one community to accept a project whose benefits are spread across millions of people. Nearby households would receive a guaranteed share of the value the plant creates. A $1,000 payment is large enough to matter but small relative to the plant’s annual electricity output. New York is already planning for additional nuclear capacity, so this proposal adds a clear and enforceable rule for compensating the people asked to live closest to it.</p>
+      </article>
+
+      <article class="card no-card">
+        <span class="label">Best Case for No</span>
+        <h3>The financial risk may be too large</h3>
+        <p>Nuclear power’s strongest argument is reliability, but its greatest weakness is financial risk. The two newest U.S. reactors at Plant Vogtle were originally expected to cost $14 billion and begin operating in 2016 and 2017. Their estimated cost eventually exceeded $30 billion after years of delay. A New York project could leave ratepayers or taxpayers paying for overruns long before any electricity or household dividend appears. The $1,000 payment may also look like an attempt to purchase consent for risks that are difficult to price. An accident is unlikely but potentially severe, and the United States still has no permanent repository for commercial spent fuel. The plant could crowd out cheaper energy efficiency, transmission, renewable generation, or storage. Residents outside the 10-mile boundary would also face some costs without receiving payments.</p>
+      </article>
+
+      <article class="card buried-card">
+        <span class="label">Where Is the Body Buried?</span>
+        <h3>The hardest assumptions</h3>
+        <p>The weakest assumption is that the operator can finance the plant, sell its electricity competitively, and still guarantee the dividend. The $50 million estimate assumes 50,000 eligible households, but the actual number would depend on the site. The payment does not remove accident risk, construction disruption, water use, or the possibility that spent fuel remains locally for decades. The 10-mile line is also arbitrary. A household just outside it receives nothing, even though it may face similar concerns. If the project fails before operation, residents endure construction without ever receiving the promised annual payment.</p>
+      </article>
+
+      <article class="card">
+        <span class="label">Why Isn’t This Already Happening?</span>
+        <h3>The incentives do not line up</h3>
+        <p>The benefits of nuclear power are spread across the state, while the construction and perceived risks are concentrated near one community. That gives local residents a strong reason to organize against a plant, while each distant electricity customer has little reason to fight for it. Developers also face enormous upfront costs, long licensing and construction periods, uncertain future electricity prices, and the risk that regulators or politicians change direction. The dividend solves only part of that problem. It may increase local support, but it also raises project costs and creates arguments over eligibility. Some nuclear supporters may resist paying residents because they believe the plant is already safe, while opponents may view any payment as a bribe. New York is now planning for additional advanced nuclear power, but deciding who hosts it and who carries the financial risk remains much harder than announcing a statewide target.</p>
+      </article>
+    </section>
+
+    <section class="vote-callout" aria-labelledby="vote-title">
+      <div>
+        <h2 id="vote-title">Would you accept the deal?</h2>
+        <p>Vote YES, NO, or YES, IF and briefly explain what shaped your choice.</p>
+      </div>
+      <a class="primary-button" href="vote.html">Vote anonymously</a>
+    </section>
+
+    <section class="sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Sources and calculations</h2>
+      <ul>
+        <li><a href="https://www.eia.gov/electricity/state/newyork/" target="_blank" rel="noopener">U.S. Energy Information Administration, New York Electricity Profile</a>: nuclear supplied about one-fifth of New York’s utility-scale electricity.</li>
+        <li><a href="https://www.energy.gov/ne/articles/nuclear-power-most-reliable-energy-source-and-its-not-even-close" target="_blank" rel="noopener">U.S. Department of Energy, Nuclear Power Is the Most Reliable Energy Source</a>: U.S. nuclear plants operated at a capacity factor above 92% in 2024.</li>
+        <li><a href="https://www.energy.gov/ne/articles/5-fast-facts-about-nuclear-energy" target="_blank" rel="noopener">U.S. Department of Energy, Five Fast Facts About Nuclear Energy</a>: nuclear output and household-equivalent comparison.</li>
+        <li><a href="https://www.eia.gov/energyexplained/nuclear/nuclear-power-and-the-environment.php" target="_blank" rel="noopener">U.S. Energy Information Administration, Nuclear Power and the Environment</a>: reactors do not produce carbon dioxide while operating, although their lifecycle still creates emissions.</li>
+        <li><a href="https://www.eia.gov/todayinenergy/detail.php?id=57280" target="_blank" rel="noopener">U.S. Energy Information Administration, Vogtle Cost and Schedule</a>: original and updated construction estimates for the newest U.S. reactors.</li>
+        <li><a href="https://www.nrc.gov/waste/spent-fuel-storage" target="_blank" rel="noopener">U.S. Nuclear Regulatory Commission, Spent Fuel Storage</a>: commercial spent fuel remains stored at reactor sites while the United States lacks a permanent repository.</li>
+        <li><a href="https://www.nyserda.ny.gov/All-Programs/Advanced-Nuclear-Technologies" target="_blank" rel="noopener">NYSERDA, Advanced Nuclear Technologies</a>: New York’s current planning for additional nuclear capacity.</li>
+      </ul>
+      <p class="note">Calculations: 1,000 MW × 8,760 hours × 92% = 8.06 billion kWh per year. A $50 million annual fund divided by that output equals $0.0062 per kWh. The 50,000-household example is illustrative because no site has been selected.</p>
+    </section>
+  </main>
+
+  <footer>
+    Prepared by Michael Scholz for ECON 238. This is a class ballot initiative, not an active New York referendum.
+  </footer>
+</body>
+</html>

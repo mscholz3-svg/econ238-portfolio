@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vote | Nuclear Host Community Dividend</title>
+  <style>
+    :root {
+      --navy: #10283b;
+      --cream: #f5f0e5;
+      --orange: #df6434;
+      --gold: #efbd48;
+      --ink: #17222b;
+      --paper: #fffdf8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 24px 20px 54px;
+      color: white;
+      background: var(--navy);
+    }
+
+    .wrap {
+      width: min(900px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 35px;
+      color: var(--gold);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--gold);
+      font-size: .86rem;
+      font-weight: 900;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 7vw, 4.7rem);
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+
+    header p {
+      max-width: 760px;
+      margin: 18px 0 0;
+      font-size: 1.08rem;
+    }
+
+    main { padding: 34px 0 56px; }
+
+    .question {
+      margin-bottom: 24px;
+      padding: 24px;
+      border-top: 7px solid var(--orange);
+      border-radius: 9px;
+      background: var(--paper);
+      box-shadow: 0 10px 30px rgba(16,40,59,.12);
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 1.55rem;
+    }
+
+    .question p { margin: 0; }
+
+    .form-shell {
+      overflow: hidden;
+      border-radius: 9px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(16,40,59,.12);
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      min-height: 1120px;
+      border: 0;
+    }
+
+    .fallback {
+      padding: 22px;
+      text-align: center;
+      background: var(--paper);
+    }
+
+    .fallback a {
+      color: #174d67;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="back" href="index.html">← Read the full proposal</a>
+      <p class="eyebrow">Anonymous class vote</p>
+      <h1>Would you accept the deal?</h1>
+      <p>Choose YES, NO, or YES, IF. The form does not ask for your name, and a short explanation will help show why people voted the way they did.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="question" aria-labelledby="question-title">
+      <h2 id="question-title">New York Nuclear Host Community Dividend Act</h2>
+      <p>Should New York approve one new nuclear power plant and require the operator to pay $1,000 each year to every occupied household within 10 miles? Payments begin when the plant starts operating and continue while it operates.</p>
+    </section>
+
+    <section class="form-shell" aria-label="Voting form">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLScwkmI-iPONeCrcclRB_pOerCimkWND8dp8Bbt5wl0qw3sOdA/viewform?embedded=true"
+        title="Nuclear host community dividend vote"
+        loading="eager">Loading…</iframe>
+      <div class="fallback">If the form does not appear, <a href="https://docs.google.com/forms/d/e/1FAIpQLScwkmI-iPONeCrcclRB_pOerCimkWND8dp8Bbt5wl0qw3sOdA/viewform?usp=publish-editor" target="_blank" rel="noopener">open the voting form in a new tab</a>.</div>
+    </section>
+  </main>
+</body>
+</html>
