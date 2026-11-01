@@ -9,3 +9,5 @@
 - [Week 5 Assignment](https://mscholz3-svg.github.io/econ238-portfolio/week-5/)
 
 - [Week 7 Assignment](https://mscholz3-svg.github.io/econ238-portfolio/week-7/)
+
+- [Week 9 Assignment](https://mscholz3-svg.github.io/econ238-portfolio/week-9/)
