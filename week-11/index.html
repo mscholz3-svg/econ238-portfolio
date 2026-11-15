@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A proposal for a federal office that makes companies prove voluntary environmental claims across a product's full life cycle.">
+  <title>No Green Claim Without the Receipts</title>
+  <style>
+    :root {
+      --ink: #13251f;
+      --muted: #54665e;
+      --paper: #f7f4ea;
+      --card: #fffdf7;
+      --green: #1f684d;
+      --lime: #c9f27a;
+      --orange: #ff8a53;
+      --line: #c9cec5;
+      --shadow: 0 18px 50px rgba(19, 37, 31, .12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 7% 4%, rgba(201, 242, 122, .3), transparent 24rem),
+        var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 36px)); margin: 0 auto; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(19, 37, 31, .12);
+      background: rgba(247, 244, 234, .9);
+      backdrop-filter: blur(14px);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 62px; gap: 18px; }
+    .brand { font-weight: 900; letter-spacing: -.02em; text-decoration: none; }
+    .navlinks { display: flex; gap: 17px; align-items: center; font-size: .9rem; }
+    .navlinks a { text-decoration: none; color: var(--muted); }
+    .navlinks a:hover { color: var(--ink); }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      padding: 11px 18px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--lime);
+    }
+    .button.secondary { background: transparent; color: var(--ink); box-shadow: none; }
+    header { padding: 84px 0 66px; }
+    .hero { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: 60px; }
+    .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 900; color: var(--green); }
+    h1 { margin: 10px 0 20px; max-width: 760px; font-size: clamp(3rem, 7vw, 6.7rem); line-height: .91; letter-spacing: -.065em; }
+    .lead { max-width: 720px; margin: 0 0 27px; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.35rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .receipt {
+      position: relative;
+      max-width: 390px;
+      margin-left: auto;
+      padding: 28px 25px 34px;
+      background: #fffef9;
+      border: 1px solid #d6d2c5;
+      box-shadow: var(--shadow);
+      transform: rotate(1.5deg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .receipt:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      height: 20px;
+      background: linear-gradient(135deg, #fffef9 10px, transparent 0) 0 0/20px 20px repeat-x,
+                  linear-gradient(45deg, #fffef9 10px, transparent 0) 0 0/20px 20px repeat-x;
+    }
+    .receipt h2 { margin: 0; text-align: center; font-size: 1.2rem; }
+    .receipt .tiny { text-align: center; color: #6f736d; font-size: .74rem; }
+    .dash { border-top: 2px dashed #adb2aa; margin: 17px 0; }
+    .row { display: flex; justify-content: space-between; gap: 18px; margin: 9px 0; }
+    .row strong { text-align: right; }
+    .stamp {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 7px 10px;
+      color: var(--green);
+      border: 3px solid var(--green);
+      font-family: inherit;
+      font-weight: 900;
+      transform: rotate(-4deg);
+    }
+    section { padding: 74px 0; }
+    .section-head { max-width: 760px; margin-bottom: 30px; }
+    h2 { margin: 7px 0 13px; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.02; letter-spacing: -.045em; }
+    h3 { margin: 0 0 8px; font-size: 1.18rem; }
+    p { margin: 0 0 14px; }
+    .muted { color: var(--muted); }
+    .dark { color: #f7f4ea; background: var(--ink); }
+    .dark .muted { color: #bdc9c3; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--card); box-shadow: 0 6px 0 rgba(19, 37, 31, .06); }
+    .card .num { color: var(--green); font-size: 2rem; font-weight: 950; }
+    .dark .card { background: #1a342b; border-color: #3e5a4f; box-shadow: none; }
+    .dark .card .num { color: var(--lime); }
+    .pill { display: inline-block; margin-bottom: 10px; padding: 5px 10px; border-radius: 999px; background: var(--lime); color: var(--ink); font-size: .74rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+    .diagram { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 25px; }
+    .step { position: relative; min-height: 130px; padding: 18px; border: 1px solid #5c766b; border-radius: 18px; background: #1a342b; }
+    .step small { color: var(--lime); font-weight: 800; }
+    .step b { display: block; margin-top: 7px; font-size: 1.02rem; }
+    .checker { display: grid; grid-template-columns: .7fr 1.3fr; gap: 22px; align-items: stretch; }
+    .control, .result { padding: 27px; border: 1px solid var(--line); border-radius: 22px; background: var(--card); }
+    label { display: block; margin-bottom: 8px; font-weight: 850; }
+    select, input[type="range"] { width: 100%; }
+    select { padding: 12px; border: 1px solid #9ca79f; border-radius: 10px; background: white; color: var(--ink); font: inherit; }
+    .claim-title { font-size: 1.55rem; font-weight: 900; letter-spacing: -.02em; }
+    .verdict { display: inline-block; margin: 9px 0 16px; padding: 6px 10px; border-radius: 8px; background: #fff0d5; color: #76420e; font-weight: 900; }
+    .proof-list { margin: 0; padding-left: 20px; }
+    .proof-list li { margin-bottom: 7px; }
+    .math { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .equation { padding: 24px; border: 2px solid var(--ink); border-radius: 18px; background: white; }
+    .equation .big { display: block; margin: 6px 0; color: var(--green); font-size: clamp(2rem, 5vw, 4rem); font-weight: 950; letter-spacing: -.05em; }
+    .calc-output { margin-top: 16px; padding: 16px; border-radius: 14px; background: #e8f5cb; font-weight: 800; }
+    .assumption { font-size: .9rem; color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+    .argument { padding: 26px; border-radius: 20px; }
+    .argument.for { background: #dff2b9; }
+    .argument.against { background: #ffe1d3; }
+    .argument ul { padding-left: 20px; }
+    .argument li { margin: 9px 0; }
+    .guardrails { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .guardrail { padding: 20px; border-left: 5px solid var(--orange); background: #fffdf7; border-radius: 0 14px 14px 0; }
+    .sources { columns: 2; column-gap: 36px; padding-left: 20px; }
+    .sources li { break-inside: avoid; margin: 0 0 15px; }
+    footer { padding: 35px 0 55px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    .callout { margin-top: 25px; padding: 25px; border: 2px solid var(--lime); border-radius: 18px; color: white; background: #1a342b; }
+    @media (max-width: 850px) {
+      .hero, .checker, .math, .split { grid-template-columns: 1fr; }
+      .receipt { margin: 30px auto 0; }
+      .cards { grid-template-columns: 1fr; }
+      .diagram { grid-template-columns: 1fr 1fr; }
+      .guardrails { grid-template-columns: 1fr; }
+      .navlinks a:not(.button) { display: none; }
+    }
+    @media (max-width: 520px) {
+      .diagram { grid-template-columns: 1fr; }
+      .sources { columns: 1; }
+      header { padding-top: 55px; }
+      h1 { font-size: 3.25rem; }
+    }
+    @media print {
+      nav, .actions, .control { display: none; }
+      body { background: white; }
+      section { break-inside: avoid; padding: 28px 0; }
+      .dark { color: var(--ink); background: white; }
+      .dark .muted { color: var(--muted); }
+      .dark .card, .step { color: var(--ink); background: white; border-color: var(--line); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#top">GREEN RECEIPTS</a>
+      <div class="navlinks">
+        <a href="one-look.html">One-look graphic</a>
+        <a href="#idea">The idea</a>
+        <a href="#economics">Economics</a>
+        <a href="#objections">Tradeoffs</a>
+        <a class="button" href="#receipt-demo">Check a claim</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top">
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">An environmental economics proposal by Michael Scholz</div>
+        <h1>No green claim without the receipts.</h1>
+        <p class="lead">Companies can call a product green because most customers cannot check the mine, factory, power grid, shipping route, and landfill themselves. My idea is simple: if a company wants to profit from an environmental claim, it has to show the full calculation.</p>
+        <div class="actions">
+          <a class="button" href="#idea">See the proposal</a>
+          <a class="button secondary" href="one-look.html">Open bracket graphic</a>
+          <a class="button secondary" href="#numbers">See the math</a>
+        </div>
+      </div>
+      <div class="receipt" aria-label="Example environmental receipt">
+        <h2>ENVIRONMENTAL RECEIPT</h2>
+        <div class="tiny">Claim ID 2031-EV-4821</div>
+        <div class="dash"></div>
+        <div class="row"><span>Advertised claim</span><strong>“Zero emission”</strong></div>
+        <div class="row"><span>Tailpipe</span><strong>0</strong></div>
+        <div class="row"><span>Battery + vehicle</span><strong>COUNTED</strong></div>
+        <div class="row"><span>Electricity source</span><strong>COUNTED</strong></div>
+        <div class="row"><span>End of life</span><strong>COUNTED</strong></div>
+        <div class="dash"></div>
+        <div class="row"><span>Allowed wording</span><strong>Lower life-cycle emissions*</strong></div>
+        <div class="tiny">*Compared with a defined gasoline vehicle under stated assumptions.</div>
+        <span class="stamp">RECEIPTS ATTACHED</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="idea" class="dark">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--lime)">The one-look version</div>
+          <h2>Create a Federal Office of Environmental Claims.</h2>
+          <p class="muted">The office would not decide which products people are allowed to buy. It would regulate voluntary claims such as green, sustainable, carbon neutral, zero emission, and climate friendly. No claim would be allowed without a public environmental receipt.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="num">01</div>
+            <h3>Make the boundary visible</h3>
+            <p class="muted">A company must show whether it counted raw materials, production, shipping, product use, and disposal.</p>
+          </article>
+          <article class="card">
+            <div class="num">02</div>
+            <h3>Compare against something real</h3>
+            <p class="muted">“Better” only means something if the company names the alternative, time period, location, and assumptions.</p>
+          </article>
+          <article class="card">
+            <div class="num">03</div>
+            <h3>Put the risk on the claimant</h3>
+            <p class="muted">The company pays for verification. False claims bring refunds, penalties, and a temporary loss of claim privileges.</p>
+          </article>
+        </div>
+        <div class="diagram" aria-label="Product life cycle">
+          <div class="step"><small>STEP 1</small><b>Raw materials</b><span class="muted">Mining, farming, and other inputs</span></div>
+          <div class="step"><small>STEP 2</small><b>Production</b><span class="muted">Factories, energy, water, and waste</span></div>
+          <div class="step"><small>STEP 3</small><b>Transportation</b><span class="muted">Shipping between every major stage</span></div>
+          <div class="step"><small>STEP 4</small><b>Use</b><span class="muted">Electricity, fuel, maintenance, and lifespan</span></div>
+          <div class="step"><small>STEP 5</small><b>End of life</b><span class="muted">Reuse, recycling, disposal, or leakage</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="receipt-demo">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Try the rule</div>
+          <h2>What would a company actually have to prove?</h2>
+          <p class="muted">Different claims need different evidence. The goal is not to force every product into one score. It is to stop a company from using a narrow fact to imply a much broader environmental benefit.</p>
+        </div>
+        <div class="checker">
+          <div class="control">
+            <label for="claim">Choose a claim</label>
+            <select id="claim">
+              <option value="ev">“Zero-emission vehicle”</option>
+              <option value="organic">“Organic means climate friendly”</option>
+              <option value="neutral">“Carbon-neutral product”</option>
+              <option value="recycled">“Made with recycled material”</option>
+            </select>
+            <p class="assumption" style="margin-top:15px">This is a demonstration of the proposed rule, not a legal determination about a particular company.</p>
+          </div>
+          <div class="result" aria-live="polite">
+            <div class="claim-title" id="claimTitle"></div>
+            <div class="verdict" id="verdict"></div>
+            <p id="claimText"></p>
+            <h3>Receipts required</h3>
+            <ul class="proof-list" id="proofList"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="economics" class="dark">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--lime)">Why economics matters</div>
+          <h2>The product is not the only thing being sold. So is the story.</h2>
+          <p class="muted">Environmental quality is often a credence attribute. Even after buying a product, the customer may never know whether the environmental story was true. That information gap creates a market where a vague claim can be cheaper than making a real improvement.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="pill">Information asymmetry</span>
+            <h3>The seller knows more</h3>
+            <p class="muted">A customer cannot cheaply trace every supplier. A firm can therefore benefit from information that the buyer cannot verify.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Bad incentive</span>
+            <h3>Marketing can beat improvement</h3>
+            <p class="muted">If a green-looking claim raises demand, a firm may spend on wording and packaging instead of reducing its actual impact.</p>
+          </article>
+          <article class="card">
+            <span class="pill">Proposed correction</span>
+            <h3>Make proof part of the price</h3>
+            <p class="muted">Verification raises the cost of making a claim, but it also lets honest firms separate themselves from firms that only imitate them.</p>
+          </article>
+        </div>
+        <div class="callout">
+          <strong>The changed margin:</strong> A firm would compare the profit from making a green claim with the cost of measuring, verifying, and defending it. Claims that cannot survive that test should disappear. Real improvements become more valuable because competitors cannot copy the language for almost nothing.
+        </div>
+      </div>
+    </section>
+
+    <section id="numbers">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Back-of-the-envelope test</div>
+          <h2>How expensive could this be?</h2>
+          <p class="muted">There is no existing version of this exact agency, so these are transparent planning assumptions, not discovered facts. The point is to show what would have to be true for the idea to make economic sense.</p>
+        </div>
+        <div class="math">
+          <div class="equation">
+            <h3>Illustrative annual pilot</h3>
+            <p>10,000 claim families × $7,500 average independent audit</p>
+            <span class="big">$75 million</span>
+            <p>Plus 200 analysts × $160,000 in salary, benefits, and support, and $18 million for enforcement and data systems</p>
+            <span class="big">$50 million</span>
+            <p><strong>Total resource cost: $125 million per year.</strong></p>
+          </div>
+          <div class="equation">
+            <h3>Climate-only break-even</h3>
+            <p>Choose a value for avoiding one metric ton of CO₂:</p>
+            <label for="carbonValue">$<span id="carbonLabel">100</span> per ton</label>
+            <input id="carbonValue" type="range" min="50" max="250" step="10" value="100">
+            <div class="calc-output" id="breakEven"></div>
+            <p class="assumption">This ignores benefits from stopping consumer deception, improving competition, and reducing impacts other than climate change. EPA's 2023 report estimated $208 per metric ton for emissions in 2024 at its 2 percent near-term discount rate, in 2020 dollars. That estimate is uncertain and changes with the discount rate.</p>
+          </div>
+        </div>
+        <div class="cards" style="margin-top:20px">
+          <article class="card"><div class="num">$5,000</div><h3>Suggested filing fee</h3><p class="muted">Ten thousand filings would raise $50 million, roughly covering the illustrative agency budget. Small firms could receive a waiver or use a shared industry calculation.</p></article>
+          <article class="card"><div class="num">$0.97</div><h3>Cost per household for scale</h3><p class="muted">If the entire $125 million resource cost were spread evenly across the Census Bureau's 129.2 million U.S. households, it would be about 97 cents each. Actual costs would not be evenly distributed.</p></article>
+          <article class="card"><div class="num">52%</div><h3>Why boundaries matter</h3><p class="muted">A 2024 Department of Energy life-cycle estimate found a small electric SUV produced 52 percent fewer greenhouse-gas emissions than a comparable gasoline SUV. That is a meaningful advantage, but it is not the same thing as zero impact.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="current" class="dark">
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow" style="color:var(--lime)">What exists now</div>
+          <h2>This idea builds on a fence that already has a purpose.</h2>
+          <p class="muted">The FTC already says environmental marketing claims need reliable scientific support, but its Green Guides are guidance rather than a single mandatory receipt system. USDA protects the meaning of “organic.” EPA, DOE, and other agencies maintain specialized methods and labels. Those separate programs exist because food, cars, appliances, and chemicals require different expertise.</p>
+          <p class="muted">A new office should not erase those systems. It should create a common front door and public format, then rely on the existing technical agencies for the actual standards. That is my Chesterton's Fence concern: centralizing the claim might simplify information, but centralizing every scientific method could destroy useful specialization.</p>
+        </div>
+        <div>
+          <div class="eyebrow" style="color:var(--lime)">What changes</div>
+          <h2>Voluntary claim, mandatory proof.</h2>
+          <p class="muted">A company could still sell a product without a green receipt. It simply could not make covered environmental claims. That keeps the rule focused on speech used for profit instead of turning the agency into a general product regulator.</p>
+          <p class="muted">The office would start with high-risk, broad claims and large companies. Narrow factual claims such as “30 percent recycled plastic” would use a shorter verification path. Broad claims such as “sustainable” would face the strongest burden because they can imply benefits across many environmental categories.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="objections">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Strongest arguments</div>
+          <h2>The idea can help consumers and still create new problems.</h2>
+          <p class="muted">The serious question is not whether greenwashing is annoying. It is whether a federal verification system improves decisions enough to justify its cost, delay, and political risk.</p>
+        </div>
+        <div class="split">
+          <div class="argument for">
+            <h3>The strongest case for it</h3>
+            <ul>
+              <li>Consumers get comparable information they could not efficiently produce alone.</li>
+              <li>Honest companies are less likely to lose business to firms making cheaper, vague claims.</li>
+              <li>Companies must consider impacts hidden upstream or shifted to another community.</li>
+              <li>A public method makes assumptions visible and easier for researchers to challenge.</li>
+              <li>Fees place more of the cost on firms choosing to profit from the claim.</li>
+            </ul>
+          </div>
+          <div class="argument against">
+            <h3>The strongest case against it</h3>
+            <ul>
+              <li>Life-cycle calculations can produce false precision because suppliers and future product use are uncertain.</li>
+              <li>Compliance costs may protect large firms and discourage small firms from discussing real improvements.</li>
+              <li>Political pressure may determine which assumptions count as official science.</li>
+              <li>Approval delays could slow products that actually reduce environmental harm.</li>
+              <li>A government receipt may create too much trust in a number that is conditional and incomplete.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow" style="color:var(--lime)">Guardrails</div>
+          <h2>How I would keep the cure from becoming worse than the problem.</h2>
+        </div>
+        <div class="guardrails">
+          <div class="guardrail"><h3>Show a range</h3><p class="muted">Publish uncertainty and sensitivity tests instead of pretending every impact is known exactly.</p></div>
+          <div class="guardrail"><h3>Use tiers</h3><p class="muted">Simple factual claims receive a cheap path. Broad superiority and net-zero claims receive a full audit.</p></div>
+          <div class="guardrail"><h3>Protect small firms</h3><p class="muted">Offer fee waivers, open calculators, and shared product-category data so compliance does not become a barrier to entry.</p></div>
+          <div class="guardrail"><h3>Audit the auditor</h3><p class="muted">Randomly recheck approved claims, rotate verifiers, publish conflicts, and penalize both the firm and verifier for knowing misstatements.</p></div>
+          <div class="guardrail"><h3>Do not confuse categories</h3><p class="muted">Organic is a production standard. It should not silently become a climate claim unless the climate evidence is separately shown.</p></div>
+          <div class="guardrail"><h3>Expire every receipt</h3><p class="muted">A claim must be updated when suppliers, energy sources, product design, or the comparison product materially changes.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <div class="eyebrow">Environmental justice</div>
+          <h2>The receipt should show where the cost lands.</h2>
+          <p>A national average can hide a mine, factory, waste site, or polluted electricity source affecting one community. The receipt should therefore include a location map for major impacts and report which stage creates the largest local exposure.</p>
+          <p class="muted">This would not automatically fix unequal exposure. It would at least make it harder for a company to advertise the clean consumer experience while hiding costs imposed on workers or communities somewhere else in the supply chain.</p>
+        </div>
+        <div>
+          <div class="eyebrow">Unknowns</div>
+          <h2>What I still would not know.</h2>
+          <p class="muted">Would shoppers use the receipt, or would it become another label people ignore? Would firms improve products or simply stop making claims? Would shared databases reduce costs, or allow one bad assumption to spread everywhere? Would foreign suppliers disclose enough information? The pilot should measure changes in claims, prices, market shares, emissions, approval time, and small-business participation before the system expands.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources" style="background:#ebe7da">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Sources and methods</div>
+          <h2>Receipts for the receipt idea.</h2>
+          <p class="muted">The audit and staffing figures above are my own illustrative assumptions. The sources below establish the current rules, available life-cycle methods, examples, and economic problem.</p>
+        </div>
+        <ol class="sources">
+          <li><a href="https://www.ftc.gov/business-guidance/advertising-marketing/environmental-marketing" target="_blank" rel="noopener">Federal Trade Commission, Environmental Marketing and Green Guides</a>.</li>
+          <li><a href="https://www.ftc.gov/sites/default/files/attachments/press-releases/ftc-issues-revised-green-guides/greenguidesstatement.pdf" target="_blank" rel="noopener">Federal Trade Commission, Green Guides Statement of Basis and Purpose</a>.</li>
+          <li><a href="https://www.epa.gov/greenerproducts/frequent-questions-about-sustainable-marketplace-and-green-products" target="_blank" rel="noopener">U.S. Environmental Protection Agency, product life-cycle assessment overview</a>.</li>
+          <li><a href="https://www.energy.gov/cmei/rd-greet-life-cycle-assessment-model" target="_blank" rel="noopener">U.S. Department of Energy, R&amp;D GREET Life Cycle Assessment Model</a>.</li>
+          <li><a href="https://www.energy.gov/cmei/vehicles/articles/fotw-1357-august-26-2024-small-electric-suv-produces-52-fewer-life-cycle" target="_blank" rel="noopener">U.S. Department of Energy, life-cycle comparison of small electric and gasoline SUVs</a>.</li>
+          <li><a href="https://www.ams.usda.gov/services/organic-certification/organic-basics" target="_blank" rel="noopener">U.S. Department of Agriculture, USDA Certified Organic basics</a>.</li>
+          <li><a href="https://environment.ec.europa.eu/topics/circular-economy-topics/green-claims_en" target="_blank" rel="noopener">European Commission, Green Claims proposal and background</a>.</li>
+          <li><a href="https://committee.iso.org/cms/live/live/en/sites/isoorg/contents/news/insights/Climate/the-greenhouse-effect/newsBody/standard-reference/standard-reference-1%40/71206.html" target="_blank" rel="noopener">International Organization for Standardization, ISO 14067 product carbon-footprint standard</a>.</li>
+          <li><a href="https://www.epa.gov/system/files/documents/2023-12/epa_scghg_2023_report_final.pdf" target="_blank" rel="noopener">U.S. Environmental Protection Agency, 2023 report on the social cost of greenhouse gases</a>.</li>
+          <li><a href="https://www.census.gov/quickfacts/fact/table/US/HSD410218" target="_blank" rel="noopener">U.S. Census Bureau, QuickFacts household estimate</a>.</li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/40181012/" target="_blank" rel="noopener">Khan et al., experimental study of purchasing managers' susceptibility to greenwashing</a>.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>No Green Claim Without the Receipts</strong><br>
+      Michael Scholz · ECON 238 · Fall 2026<br>
+      A proposal for discussion, not an existing government program.
+    </div>
+  </footer>
+
+  <script>
+    const claims = {
+      ev: {
+        title: '“Zero-emission vehicle”',
+        verdict: 'Revise the wording',
+        text: 'Zero tailpipe emissions is a specific fact. “Zero emission” can imply that manufacturing and electricity have no emissions. The approved wording must match the boundary actually measured.',
+        proof: ['Vehicle and battery manufacturing', 'Fuel or electricity production by region', 'Expected mileage and lifespan', 'Maintenance, recycling, and disposal', 'A clearly defined comparison vehicle']
+      },
+      organic: {
+        title: '“Organic means climate friendly”',
+        verdict: 'Two different claims',
+        text: 'USDA organic certification verifies compliance with organic production rules. It does not by itself prove that a product has lower greenhouse-gas emissions than a conventional alternative.',
+        proof: ['Valid organic certification', 'A separate climate calculation', 'Land use and yield assumptions', 'Fertilizer, energy, and transportation', 'The conventional product used for comparison']
+      },
+      neutral: {
+        title: '“Carbon-neutral product”',
+        verdict: 'Highest level of review',
+        text: 'The company must first count and reduce its own footprint. Any remaining offsets must be identified separately so the buyer can see what was reduced in the supply chain and what was paid for elsewhere.',
+        proof: ['Complete product carbon footprint', 'Reduction plan and prior-year comparison', 'Offset project, quantity, and price', 'Additionality, permanence, and double-counting tests', 'Expiration date and independent verification']
+      },
+      recycled: {
+        title: '“Made with recycled material”',
+        verdict: 'Use a narrow factual receipt',
+        text: 'A precise recycled-content claim is easier to verify than a broad claim that the whole product is sustainable. The receipt should preserve that distinction.',
+        proof: ['Percentage by weight', 'Pre-consumer versus post-consumer material', 'Supplier chain-of-custody records', 'Which product components are included', 'Whether the packaging is counted separately']
+      }
+    };
+
+    const select = document.getElementById('claim');
+    function renderClaim() {
+      const item = claims[select.value];
+      document.getElementById('claimTitle').textContent = item.title;
+      document.getElementById('verdict').textContent = item.verdict;
+      document.getElementById('claimText').textContent = item.text;
+      document.getElementById('proofList').innerHTML = item.proof.map(x => `<li>${x}</li>`).join('');
+    }
+    select.addEventListener('change', renderClaim);
+    renderClaim();
+
+    const slider = document.getElementById('carbonValue');
+    function renderBreakEven() {
+      const value = Number(slider.value);
+      const tons = 125000000 / value;
+      document.getElementById('carbonLabel').textContent = value.toLocaleString();
+      document.getElementById('breakEven').textContent = `The program would need to prevent about ${Math.round(tons).toLocaleString()} metric tons of CO₂ per year for climate benefits alone to equal the $125 million cost.`;
+    }
+    slider.addEventListener('input', renderBreakEven);
+    renderBreakEven();
+  </script>
+</body>
+</html>
